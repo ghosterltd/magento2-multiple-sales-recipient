@@ -19,6 +19,6 @@ Send multiple cc sales emails to the different recipients based on each customer
 
 ## Donation
 
-If this project help you reduce time to develop, you can give us some cups of beer :)
+If this project help you reduce time to develop, you can buy us some cups of beer :)
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/thinghost)
