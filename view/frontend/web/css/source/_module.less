@@ -1,0 +1,35 @@
+//
+//  Common
+//  ________________________________________________
+& when (@media-common = true) {
+    .multiple-sales-email-control {
+        margin-top: 10px;
+        overflow: hidden;
+
+        .email {
+            float: left;
+            width: 75%;
+        }
+
+        .ibtnDel {
+            float: right;
+            width: 15%;
+            padding: 8px;
+        }
+    }
+}
+
+//
+//  Mobile
+//  __________________________________________________
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .multiple-sales-email-control {
+        .email {
+            width: 70%;
+        }
+
+        .ibtnDel {
+            width: 25%;
+        }
+    }
+}

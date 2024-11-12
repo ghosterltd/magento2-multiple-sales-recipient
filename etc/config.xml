@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <multi_sales_emails>
+            <general>
+                <enabled>1</enabled>
+                <limit_emails>3</limit_emails>
+            </general>
+        </multi_sales_emails>
+    </default>
+</config>

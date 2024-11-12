@@ -1,0 +1,48 @@
+{
+    "name": "ghoster/module-multiplesalesrecipient",
+    "description": "Send multiple cc sales emails to the different recipients based on each customer.",
+    "keywords": [
+        "magento 2",
+        "magento",
+        "m2",
+        "multiple sales emails",
+        "multiple sales recipient",
+        "magento 2 extension",
+        "magento 2 extension free"
+    ],
+    "type": "magento2-module",
+    "license": "OSL-3.0",
+    "authors": [
+        {
+            "name": "Tuyen Nguyen",
+            "email": "thinghost76@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "archive": {
+        "exclude": [
+            "/.gitignore",
+            "/grumphp.yml",
+            "/pdepend.xml",
+            "/phpstan.neon",
+            "/phpunit.xml",
+            "/phpcs.xml",
+            "/phpmd.xml",
+            "/package.json",
+            "/.eslintrc.json",
+            "/.eslintignore",
+            "/tests",
+            "/.github"
+        ]
+    },
+    "require": {},
+    "version": "0.1.0",
+    "autoload": {
+        "psr-4": {
+            "GhoSter\\MultipleSalesRecipient\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

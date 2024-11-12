@@ -1,0 +1,139 @@
+<?php
+/**
+ * @var $block \GhoSter\MultipleSalesRecipient\Block\Form\Edit
+ *
+ */
+
+$addOnEmails = $block->getAdditionalSalesEmails();
+$config = $block->getConfig();
+$limitNumber = $config->getLimitEmailNumber();
+?>
+<?php if ($config->isEnabled() && $limitNumber > 0): ?>
+    <fieldset id="multiple-sales-email-table" class="fieldset multiple-sales-email">
+        <input type="hidden"
+               class="input-text"
+               name="multiple_sales_recipient"
+               id="multiple_sales_recipient"
+               value="<?= $block->escapeHtml($block->getAdditionalSalesEmailsInput()) ?>"
+               data-input="multiple_sales_recipient"
+               autocomplete="off" />
+
+        <legend class="legend">
+            <span data-title="multiple-sales-email">
+                <?= $block->escapeHtml(__('Additional Sales Email Recipient')); ?>
+            </span>
+        </legend>
+        <br>
+        <div id="multiple-sales-email-field"
+             class="field multiple-sales-email-field"
+             data-container="add-multiple-sales-email">
+            <label class="label" for="multiple-sales-email[1][email]">
+                <span><?= $block->escapeHtml(__('Addon Sales Recipients')) ?></span>
+            </label>
+
+            <?php if (empty($addOnEmails)): ?>
+                <div class="control multiple-sales-email-control">
+                    <input type="email"
+                           name="multiple-sales-email[1][email]"
+                           autocomplete="multiple-sales-email"
+                           data-input="add-multiple-sales-email"
+                           value="" title="<?= $block->escapeHtmlAttr(__('Other Sales Email')) ?>"
+                           class="input-text multiple-sales-email-input email"
+                           data-validate="{'validate-email':true}" />
+                </div>
+            <?php endif; ?>
+            <?php $i = 0; ?>
+            <?php foreach ($addOnEmails as $addOnEmail): ?>
+                <div class="control multiple-sales-email-control">
+                    <?php if ($i < $limitNumber): ?>
+                        <?php if ($i > 0): ?>
+                            <a class="ibtnDel action primary action-add" href="javascript:void(0);">
+                                <span><?= $block->escapeHtml(__('Delete')); ?></span>
+                            </a>
+                        <?php endif; ?>
+                        <input type="email"
+                               name="multiple-sales-email[<?= $block->escapeHtml($i) ?>][email]"
+                               autocomplete="multiple-sales-email"
+                               data-input="add-multiple-sales-email"
+                               value="<?= $block->escapeHtml($addOnEmail); ?>"
+                               title="<?= $block->escapeHtmlAttr(__('Email')) ?>"
+                               class="input-text multiple-sales-email-input email"
+                               data-validate="{'validate-email':true}" />
+                        <?php $i++; ?>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+
+        </div>
+
+        <div class="actions-toolbar">
+            <div class="secondary">
+                <a class="action primary action-add"
+                   id="multiple-sales-email-add-row"
+                   href="javascript:void(0);">
+                    <span><?= $block->escapeHtml(__('Add CC Email')) ?></span>
+                </a>
+            </div>
+        </div>
+
+    </fieldset>
+
+    <script>
+        require([
+            'jquery'
+        ], function ($) {
+            let counter = 0,
+                limit = <?= $block->escapeJs($limitNumber); ?>;
+
+            $(document).on(
+                'click',
+                '#multiple-sales-email-add-row',
+                function () {
+                    counter = $('.multiple-sales-email-input.email').length + 1;
+
+                    let newRow = $("<div class=\"control multiple-sales-email-control\">"),
+                        cols = "";
+
+                    cols += '<a class="ibtnDel action primary action-add" ' +
+                        'href="javascript:void(0);">' +
+                        '<span><?= $block->escapeHtml(__('Delete')); ?></span></a>';
+                    cols += '<input type="email" ' +
+                        'name="multiple-sales-email[' + counter + '][email]" ' +
+                        'autocomplete="multiple-sales-email" ' +
+                        'data-input="add-multiple-sales-email" ' +
+                        'class="input-text multiple-sales-email-input email" ' +
+                        'data-validate="{\'validate-email\':true}"/>';
+
+                    newRow.append(cols);
+                    if (counter <= limit) {
+                        $('#multiple-sales-email-field').append(newRow);
+                    }
+                    counter++;
+                });
+
+            $('#multiple-sales-email-table').on('click', '.ibtnDel', function (e) {
+                $(this).closest('.multiple-sales-email-control').remove();
+                $('input[type="email"].multiple-sales-email-input').trigger('change');
+            });
+
+            $(document).on(
+                'propertychange change click keyup input paste',
+                'input[type="email"].multiple-sales-email-input',
+                function () {
+                    let result = '',
+                        emails = [];
+
+                    $('input[type="email"].multiple-sales-email-input').each(function () {
+                        if (emails.length <= limit) {
+                            emails.push($(this).val());
+                        }
+                    });
+
+                    result = emails.join(',');
+                    result = result.replace(/^,[ ]?|,$/g, '');
+                    $('input[name="multiple_sales_recipient"]').val(result);
+                }
+            );
+        });
+    </script>
+<?php endif; ?>
